@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 const Cover = ({ img, title, details }) => {
+ 
   return (
     <div>
       <div
@@ -27,7 +28,7 @@ const Cover = ({ img, title, details }) => {
 };
 
 Cover.propTypes = {
-    img: PropTypes.img,
+    img: PropTypes.string,
     title: PropTypes.string,
     details: PropTypes.string,
 }

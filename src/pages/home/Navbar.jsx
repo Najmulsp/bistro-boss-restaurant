@@ -19,13 +19,22 @@ const Navbar = () => {
   const navlinks = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/">HOME</NavLink>
       </li>
       <li>
-        <NavLink>Parent</NavLink>
+        <NavLink to="/menu">OUR MENU</NavLink>
       </li>
       <li>
-        <NavLink to="/menu">Our Menu</NavLink>
+        <NavLink to="/dashboard">DASHBOARD</NavLink>
+      </li>
+      <li>
+        <NavLink to="/order/salad">ORDER FOOD</NavLink>
+      </li>
+      <li>
+        <NavLink to="/login">Login</NavLink>
+      </li>
+      <li>
+        <NavLink to="/register">Register</NavLink>
       </li>
     </>
   );

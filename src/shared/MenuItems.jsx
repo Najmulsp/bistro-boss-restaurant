@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 
-const MenuItems = ({ items, btnText }) => {
+const MenuItems = ({ items, btnText, title }) => {
     
   return (
     <div>
@@ -20,13 +21,16 @@ const MenuItems = ({ items, btnText }) => {
         <p>{singleItem.recipe}</p>
       </div>
       <p className="text-yellow-600">${singleItem.price}</p>
+      
     </div>
         )}
       </div>
       <div className="text-center pb-10">
+      <Link to={`/order/${title}`}>
       <button className="btn mx-auto btn-outline  border-b-4 border-black dark:border-white uppercase text-lg mt-4">
         {btnText}
       </button>
+      </Link>
     </div>
     </div>
   );
@@ -34,6 +38,7 @@ const MenuItems = ({ items, btnText }) => {
 MenuItems.propTypes = {   
     items: PropTypes.array,
     btnText: PropTypes.string,
+    title: PropTypes.string,
    
 }
 export default MenuItems;
