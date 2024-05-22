@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../authentication/AuthProvider";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme")||"light");
   useEffect(() => {
     localStorage.setItem("theme", theme);
@@ -16,6 +19,10 @@ const Navbar = () => {
     }
   };
 
+    const handleLogout = () =>{
+      logout()
+      toast('You have successfully logged out')
+    }
   const navlinks = (
     <>
       <li>
@@ -75,6 +82,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navlinks}</ul>
       </div>
       <div className="navbar-end gap-4">
+      
         <label className="cursor-pointer grid place-items-center">
           <input
             onChange={handleTheme}
@@ -114,7 +122,31 @@ const Navbar = () => {
           </svg>
         </label>
 
-        <a className="btn">Button</a>
+        {user ? (
+          <div id="profileImg">
+            <img
+              className="w-12 md:w-12 lg:w-14  rounded-full "
+              alt="profile picture"
+              src={
+                user?.photoURL ||
+                "https://i.ibb.co/RPpmvwb/images-blank-profile.png"
+              }
+            />
+
+            <div id="dropdown" className=" w-28 lg:w-40 rounded-lg z-30">
+              <h1 className="p-2 bg-purple-400 dark:bg-gradient-to-r from-yellow-600 via-purple-600 to-purple-700 rounded-lg text-center font-semibold  w-full">
+                {user.displayName || "user name not found"}
+              </h1>
+              <button onClick={handleLogout} className="btn w-full bg-yellow-600 dark:bg-gradient-to-r from-purple-500 via-purple-600 to-yellow-700 hover:bg-gradient-to-br focus:ring-purple-300">
+                Log Out
+              </button>
+            </div>
+          </div>
+        ) : (
+          <Link className="btn px-6 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-700 hover:bg-gradient-to-br focus:ring-purple-300" to="/login">
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );
