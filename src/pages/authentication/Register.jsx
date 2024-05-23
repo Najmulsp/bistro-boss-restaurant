@@ -7,8 +7,10 @@ import { AuthContext } from "./AuthProvider";
 import { toast } from "react-toastify";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
 
 const Register = () => {
+  const {verifyEmail, logout} = useAuth()
   const {
     register,
     handleSubmit,
@@ -27,7 +29,10 @@ const Register = () => {
       toast('User has created successfully')
       updateUserProfile(data.name, data.photo)
       .then(()=>{
-        navigate("/")
+        verifyEmail()
+        .then(() => {});
+        logout()
+        navigate("/login")
       })
       .catch(error=>{
         console.log(error.message)
@@ -44,7 +49,7 @@ const Register = () => {
       <div className="hero-content flex-col lg:flex-row-reverse w-10/12 border shadow-2xl my-10">
         <div className="text-center lg:text-left">
           <img src={loginImg} alt="" />
-          <p className="text-center">
+          <p className="text-center dark:text-black">
             Go back to{" "}
             <Link to="/" className="text-blue-600 underline">
               Home
@@ -52,12 +57,12 @@ const Register = () => {
           </p>
         </div>
         <div className="card shrink-0 w-full max-w-sm ">
-          <h1 className="text-4xl text-center font-bold p-2">Register</h1>
+          <h1 className="text-4xl text-center text-yellow-600 font-bold p-2">Register</h1>
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             {/* name */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Name</span>
+                <span className="label-text dark:text-black">Name</span>
               </label>
               <input
                 {...register("name", { required: true })}
@@ -71,7 +76,7 @@ const Register = () => {
             {/* email */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Email</span>
+                <span className="label-text dark:text-black">Email</span>
               </label>
               <input
                 {...register("email", { required: true })}
@@ -84,7 +89,7 @@ const Register = () => {
             </div>
             {/* photo url */}
             <div className="form-control">
-              <label className="label">
+              <label className="label dark:text-black">
                 <span className="label-text">Photo URL</span>
               </label>
               <input
@@ -98,8 +103,8 @@ const Register = () => {
             </div>
             {/* password */}
             <div className="form-control relative">
-              <label className="label">
-                <span className="label-text">Password</span>
+              <label className="label ">
+                <span className="label-text dark:text-black">Password</span>
               </label>
               <input
                 {...register("password", { required: true,
@@ -139,14 +144,13 @@ const Register = () => {
             </div>
           </form>
           <div className="text-center">
-            <p>
+            <p className="dark:text-black">
               Already registered?{" "}
               <Link to="/login" className="text-yellow-600 underline">
                 Go to log in
               </Link>
             </p>
-            <p>or register with</p>
-            <p>----</p>
+            
           </div>
         </div>
       </div>

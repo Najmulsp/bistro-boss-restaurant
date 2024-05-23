@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import {app} from './Firebase.config'
 import PropTypes from 'prop-types';
+import { GoogleAuthProvider } from "firebase/auth";
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app);
-
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null)
@@ -30,6 +31,15 @@ const AuthProvider = ({children}) => {
         const updateUserProfile = (name, photo) =>{
             return   updateProfile(auth.currentUser, {displayName: name, photoURL: photo})
         }
+        // forgot password
+        const forgotPassword = (email) =>{
+            setLoading(true)
+        return   sendPasswordResetEmail(auth, email)
+        } 
+        // email verify
+        const verifyEmail = () =>{
+        return   sendEmailVerification(auth.currentUser)
+        }
         // observer
     useEffect(()=>{
         const unSubscribe =    onAuthStateChanged(auth, (currentUser)=>{
@@ -40,7 +50,12 @@ const AuthProvider = ({children}) => {
         return unSubscribe;
     }, [])
 
-
+        
+        // google login
+    const googleLogin = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider);
+      };
 
 
     const authInfo ={
@@ -49,8 +64,10 @@ const AuthProvider = ({children}) => {
         createUser,
         login,
         logout,
-        updateUserProfile
-
+        updateUserProfile,
+        forgotPassword,
+        verifyEmail,
+        googleLogin,
     }
 
     return (

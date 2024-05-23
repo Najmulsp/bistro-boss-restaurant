@@ -2,10 +2,15 @@ import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../authentication/AuthProvider";
 import { toast } from "react-toastify";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../hooks/useCart";
+
 
 const Navbar = () => {
+  const [cart] = useCart();
+  console.log(cart)
   const { user, logout } = useContext(AuthContext);
-  const [theme, setTheme] = useState(localStorage.getItem("theme")||"light");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   useEffect(() => {
     localStorage.setItem("theme", theme);
     const localTheme = localStorage.getItem("theme");
@@ -19,10 +24,10 @@ const Navbar = () => {
     }
   };
 
-    const handleLogout = () =>{
-      logout()
-      toast('You have successfully logged out')
-    }
+  const handleLogout = () => {
+    logout();
+    toast("You have successfully logged out");
+  };
   const navlinks = (
     <>
       <li>
@@ -42,6 +47,14 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to="/register">Register</NavLink>
+      </li>
+      <li>
+        <NavLink to="/dashboard/cart" className=" bg-yellow-600 bg-opacity-70">
+          <button className="flex items-center gap-2">
+          <FaShoppingCart />
+            <div className="badge badge-secondary">+{cart.length}</div>
+          </button>
+        </NavLink>
       </li>
     </>
   );
@@ -82,13 +95,12 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navlinks}</ul>
       </div>
       <div className="navbar-end gap-4">
-      
         <label className="cursor-pointer grid place-items-center">
           <input
             onChange={handleTheme}
             type="checkbox"
             value=""
-            checked={theme=== "light"? false:true }
+            checked={theme === "light" ? false : true}
             className="toggle theme-controller bg-base-content row-start-1 col-start-1 col-span-2"
           />
           <svg
@@ -137,13 +149,19 @@ const Navbar = () => {
               <h1 className="p-2 bg-purple-400 dark:bg-gradient-to-r from-yellow-600 via-purple-600 to-purple-700 rounded-lg text-center font-semibold  w-full">
                 {user.displayName || "user name not found"}
               </h1>
-              <button onClick={handleLogout} className="btn w-full bg-yellow-600 dark:bg-gradient-to-r from-purple-500 via-purple-600 to-yellow-700 hover:bg-gradient-to-br focus:ring-purple-300">
+              <button
+                onClick={handleLogout}
+                className="btn w-full bg-yellow-600 dark:bg-gradient-to-r from-purple-500 via-purple-600 to-yellow-700 hover:bg-gradient-to-br focus:ring-purple-300"
+              >
                 Log Out
               </button>
             </div>
           </div>
         ) : (
-          <Link className="btn px-6 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-700 hover:bg-gradient-to-br focus:ring-purple-300" to="/login">
+          <Link
+            className="btn px-6 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-700 hover:bg-gradient-to-br focus:ring-purple-300"
+            to="/login"
+          >
             Login
           </Link>
         )}

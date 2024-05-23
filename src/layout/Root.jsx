@@ -6,7 +6,7 @@ import { ToastContainer} from 'react-toastify';
 
 const Root = () => {
     const location = useLocation()
-    const noHeaderFooter = location.pathname.includes('login', 'register')
+    const noHeaderFooter = location.pathname.includes('login') || location.pathname.includes('register')
     return (
         <div>
             {noHeaderFooter || <Navbar></Navbar>}
