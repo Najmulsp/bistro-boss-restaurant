@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendEmailV
 import {app} from './Firebase.config'
 import PropTypes from 'prop-types';
 import { GoogleAuthProvider } from "firebase/auth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app);
@@ -11,7 +12,7 @@ const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
-
+        const axiosPublic = useAxiosPublic()
         // create user
         const createUser = (email, password) =>{
             setLoading(true)
@@ -44,7 +45,20 @@ const AuthProvider = ({children}) => {
     useEffect(()=>{
         const unSubscribe =    onAuthStateChanged(auth, (currentUser)=>{
             setUser(currentUser);
-            console.log('currentUser: ', currentUser)
+            // console.log('currentUser: ', currentUser)
+            if(currentUser){
+                // get token from server and store
+                axiosPublic.post('jwt', currentUser.email)
+                .then(res=>{
+                   if(res.data.token){
+                    localStorage.setItem('access-token',res.data.token)
+                   } 
+                })
+            }
+            else{
+                // to do: remove token if stored on client side
+                localStorage.removeItem('access-Token')
+            }
             setLoading(false);
         })
         return unSubscribe;

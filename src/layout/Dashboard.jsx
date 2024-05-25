@@ -1,14 +1,15 @@
 import { AiFillHome } from "react-icons/ai";
-import { FaClipboardList, FaShoppingCart } from "react-icons/fa";
+import { FaClipboardList, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
 import { FaCalendarDays } from "react-icons/fa6";
 import { GiShoppingBag } from "react-icons/gi";
-import { IoMenu } from "react-icons/io5";
+import { IoList, IoMenu } from "react-icons/io5";
 import { MdForwardToInbox } from "react-icons/md";
 import { PiListHeartFill } from "react-icons/pi";
-import { RiSecurePaymentFill } from "react-icons/ri";
+import { RiFileList2Fill, RiSecurePaymentFill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
+  const isAdmin = true;
   return (
     <div className="flex">
       {/* side bar */}
@@ -18,7 +19,45 @@ const Dashboard = () => {
           <p className=" text-xl tracking-[.39em]">RESTAURANT</p>
         </div>
         <ul className="menu">
+          {
+            isAdmin?
+            <>
+            
           <li>
+            <NavLink to="/dashboard/adminHome">
+              <FaCalendarDays />
+              ADMIN HOME
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/addItems">
+            <FaUtensils />
+              ADD ITEMS
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/manageItems">
+            <IoList />
+              MANEGE ITEMS
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/ManageBookings">
+            <RiFileList2Fill />
+              MANAGE BOOKING
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/users">
+            <FaUsers />
+              ALL USERS
+            </NavLink>
+          </li>
+            </>
+
+            :<>
+            
+            <li>
             <NavLink to="/dashboard/userHome">
               <AiFillHome />
               USER HOME
@@ -32,7 +71,7 @@ const Dashboard = () => {
           </li>
           <li>
             <NavLink to="/dashboard/paymentHistory">
-              <RiSecurePaymentFill />
+              <IoMenu />
               PAYMENT HISTORY
             </NavLink>
           </li>
@@ -54,6 +93,8 @@ const Dashboard = () => {
               My BOOKING
             </NavLink>
           </li>
+            </>
+          }
           <div className="divider"></div>
           <li>
             <NavLink to="/">

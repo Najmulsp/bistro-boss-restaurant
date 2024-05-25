@@ -19,6 +19,8 @@ const PrivetRoute = ({children}) => {
 
         
     return <Navigate state={location.pathname} to="/login" replace={true}></Navigate>
+    // another way to redirects then use it in log in page also
+    // return <Navigate to="/login" state={{from: location}} replace></Navigate>
 };
 PrivetRoute.propTypes = {
     children: PropTypes.object,
