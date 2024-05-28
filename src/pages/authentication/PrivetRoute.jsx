@@ -7,7 +7,6 @@ import { AuthContext } from "./AuthProvider";
 
 const PrivetRoute = ({children}) => {
     const {user, loading} = useContext(AuthContext)
-    console.log(user)
     const location = useLocation();
     
     if(loading){
@@ -18,7 +17,7 @@ const PrivetRoute = ({children}) => {
     }
 
         
-    return <Navigate state={location.pathname} to="/login" replace={true}></Navigate>
+    return <Navigate state={{from: location}} to="/login" replace={true}></Navigate>
     // another way to redirects then use it in log in page also
     // return <Navigate to="/login" state={{from: location}} replace></Navigate>
 };

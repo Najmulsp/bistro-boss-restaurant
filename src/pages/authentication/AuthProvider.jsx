@@ -48,7 +48,8 @@ const AuthProvider = ({children}) => {
             // console.log('currentUser: ', currentUser)
             if(currentUser){
                 // get token from server and store
-                axiosPublic.post('jwt', currentUser.email)
+                // console.log(currentUser.email)
+                axiosPublic.post('/jwt', currentUser)
                 .then(res=>{
                    if(res.data.token){
                     localStorage.setItem('access-token',res.data.token)
@@ -62,7 +63,7 @@ const AuthProvider = ({children}) => {
             setLoading(false);
         })
         return unSubscribe;
-    }, [])
+    }, [axiosPublic])
 
         
         // google login

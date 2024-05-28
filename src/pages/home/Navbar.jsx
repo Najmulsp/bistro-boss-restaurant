@@ -8,7 +8,7 @@ import useCart from "../../hooks/useCart";
 
 const Navbar = () => {
   const [cart] = useCart();
-  console.log(cart)
+  // console.log(cart)
   const { user, logout } = useContext(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   useEffect(() => {

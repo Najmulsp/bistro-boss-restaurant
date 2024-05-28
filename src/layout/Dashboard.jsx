@@ -5,11 +5,12 @@ import { GiShoppingBag } from "react-icons/gi";
 import { IoList, IoMenu } from "react-icons/io5";
 import { MdForwardToInbox } from "react-icons/md";
 import { PiListHeartFill } from "react-icons/pi";
-import { RiFileList2Fill, RiSecurePaymentFill } from "react-icons/ri";
+import { RiFileList2Fill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
   return (
     <div className="flex">
       {/* side bar */}

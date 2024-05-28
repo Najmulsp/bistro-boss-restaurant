@@ -20,10 +20,10 @@ const Login = () => {
   // get state from privet route where user wanted to go and after log in send there
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state || "/";
+  const from = location.state?.from?.pathname || "/";
   // if privet route is given as it here also will be as it
   // const from = location.state?.from?.pathname || "/";
-  console.log('state in the location login page', location.state)
+  // console.log('state in the location login page', location.state)
 
   const captchaRef = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +60,9 @@ const Login = () => {
   const handleGoogleLogin = () => {
     googleLogin()
     .then((result) => {
-      console.log(result.user);
+      // console.log(result.user);
+      toast("You have successfully logged in");
+      navigate(from, { replace: true });
       const userInfo= {
         name: result.user?.displayName,
         email: result.user?.email
@@ -68,8 +70,7 @@ const Login = () => {
       axiosPublic.post('/users', userInfo)
       .then(res=>{
         console.log(res.data)
-        toast("You have successfully logged in");
-      navigate(from, { replace: true });
+       
       })
       
     });

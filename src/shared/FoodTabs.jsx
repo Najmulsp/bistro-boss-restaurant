@@ -7,7 +7,7 @@ import FoodCard from "./FoodCard";
 import PropTypes from "prop-types";
 
 const FoodTabs = ({ items }) => {
-  console.log(items);
+  // console.log(items);
   const slide1 = items.slice(0, 5);
   const slide2 = items.slice(6, 9);
   const pagination = {
